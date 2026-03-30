@@ -1,2 +1,2 @@
 # SL_snake
-我用python还原了游戏SCP:secret laboratory里混沌分裂者破解装置检视时的贪吃蛇小游戏（也就是SL里的贪吃蛇）
+我用python还原了游戏SCP:secret laboratory里混沌分裂者破解装置检视时的贪吃蛇小游戏（也就是SL混沌卡里的贪吃蛇）
