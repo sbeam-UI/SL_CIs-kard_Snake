@@ -170,13 +170,15 @@ class Game:
         self.score = ProtectedVar(0)  # 加密保护分数
         self.fps = 5
         self.max_fps = 12
-
+        self.music = pygame.mixer.Sound('神人音乐.mp3')
+        self.font = pygame.font.Font('Minecraft.ttf', 20)
+        
         self.wall = Wall(self.block_size, self.map_w, self.map_h)
         self.snake = Snake(self.block_size, self.map_w, self.map_h)
         self.berry = Berry(self.block_size)
-        self.font = pygame.font.Font('Minecraft.ttf', 20)
         self.random_berry()
 
+        self.music.play()
         # 启动核心函数校验线程
         self.core_hash = get_func_hash(self.snake.move)
         threading.Thread(target=self.check_core_integrity, daemon=True).start()
