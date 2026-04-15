@@ -28,7 +28,7 @@ class SafeValue:
         if a == b == c:
             return a
         else:
-            print("断开连接（内存篡改）")
+            print("断开连接")
             pygame.quit()
             sys.exit()
 
@@ -60,7 +60,7 @@ class AntiSpeedHack:
 
         # 只拦截极端变速（正常波动不会触发）
         if delta < 5 or delta > self.max_delta:
-            print("断开连接（变速作弊）")
+            print("断开连接")
             pygame.quit()
             sys.exit()
 
@@ -71,7 +71,7 @@ def check_blacklist():
     black = ["cheatengine", "frida", "injector", "dllinject", "memoryhack"]
     for name in list(sys.modules.keys()):
         if any(x in name.lower() for x in black):
-            print("断开连接（可疑工具）")
+            print("断开连接")
             sys.exit()
 
 
@@ -243,15 +243,15 @@ class Game:
         pygame.init()
         pygame.mixer.init()
         self.block_size = 16
-        self.map_w, self.map_h = 40, 30
+        self.map_w, self.map_h = 17, 11
         self.screen = pygame.display.set_mode((self.map_w * self.block_size, self.map_h * self.block_size))
         pygame.display.set_caption("Made with Pygame")
         self.clock = pygame.time.Clock()
         self.running = True
         self.paused = False
         self.score = SafeValue(0)  # 防CE分数
-        self.fps = 5
-        self.max_fps = 12
+        self.fps = 3
+        self.max_fps = 10
 
         # 防变速器启动（修复误报版本）
         self.anti_speed = AntiSpeedHack(max_delta=500, exempt_frames=60)
@@ -259,6 +259,8 @@ class Game:
         # 背景音乐容错
         try:
             self.music = pygame.mixer.Sound('神人音乐.mp3')
+            self.music.play(-1)
+            self.music = pygame.mixer.Sound('依旧神人.mp3')
             self.music.play(-1)
         except:
             print("背景音乐加载失败，跳过播放")
@@ -293,7 +295,7 @@ class Game:
             try:
                 current_hash = hashlib.md5(self.snake.move.__code__.co_code).hexdigest()
                 if current_hash != self.core_hash:
-                    print("断开连接（代码篡改）")
+                    print("断开连接")
                     self.running = False
                     break
             except:
